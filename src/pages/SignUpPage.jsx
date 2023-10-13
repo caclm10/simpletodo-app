@@ -1,7 +1,8 @@
 import AuthSubmitButton from "@/components/auth/AuthSubmitButton"
 import AuthSwitchLink from "@/components/auth/AuthSwitchLink"
 import AuthTitle from "@/components/auth/AuthTitle"
-import Input from "@/components/common/Input"
+import TextField from "@mui/material/TextField"
+import Stack from '@mui/material/Stack';
 
 const SignUpPage = () => {
     return (
@@ -9,9 +10,26 @@ const SignUpPage = () => {
             <AuthTitle text="Create new account" />
 
             <form>
-                <Input name="name" label="Name" placeholder="Name" />
-                <Input name="email" label="Email" placeholder="Email address" />
-                <Input type="password" name="password" label="Password" placeholder="Password" />
+                <Stack spacing={3}>
+                    <TextField
+                        name="name"
+                        label="Name"
+                        placeholder="Name"
+                    />
+
+                    <TextField
+                        name="email"
+                        label="Email"
+                        placeholder="Email address"
+                    />
+
+                    <TextField
+                        type="password"
+                        name="password"
+                        label="Password"
+                        placeholder="Password"
+                    />
+                </Stack>
 
                 <AuthSubmitButton />
             </form>

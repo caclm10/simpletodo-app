@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom"
-import AlertDialog from "./components/common/AlertDialog"
+import CssBaseline from '@mui/material/CssBaseline';
 
 function App() {
   return (
     <>
-      <AlertDialog />
+      <CssBaseline />
 
       <Outlet />
     </>

@@ -1,10 +1,11 @@
-import Button from "../common/Button"
+import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
 
 const AuthSubmitButton = () => {
     return (
-        <div className="grid mt-7">
-            <Button type="submit">Continue</Button>
-        </div>
+        <Box display="grid" mt={4}>
+            <Button type="submit" variant="contained">Continue</Button>
+        </Box>
     )
 }
 

@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom"
+import { Link as RouterLink } from "react-router-dom"
+import Link from '@mui/material/Link';
+import Typography from '@mui/material/Typography';
 
 const AuthSwitchLink = ({ text, label, to }) => {
     return (
-        <p className="text-center mt-2">
-            {text} <Link to={to} className="text-cyan-600">{label}</Link>
-        </p>
+        <Typography sx={{ textAlign: "center", mt: 2 }}>
+            {text} <Link component={RouterLink} to={to} underline="none">{label}</Link>
+        </Typography>
     )
 }
 
