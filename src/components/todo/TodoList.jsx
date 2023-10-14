@@ -1,10 +1,10 @@
-import { useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 import List from '@mui/material/List';
 import { todoListAtom } from '@/stores/todo-store';
 import TodoListItem from './TodoListItem';
 
 const TodoList = () => {
-    const todoList = useAtomValue(todoListAtom)
+    const [todoList] = useAtom(todoListAtom)
 
     return (
         <List component="nav" aria-label="to-do list">
