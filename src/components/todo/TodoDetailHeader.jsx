@@ -9,7 +9,7 @@ import useDisclosure from '@/hooks/use-disclosure'
 import ItemMenu from '../ItemMenu'
 
 const TodoDetailHeader = () => {
-    const { selectedTodo } = useSelectedTodo()
+    const { todo } = useSelectedTodo()
     const deleteAlert = useDisclosure()
     const [isEdit, setIsEdit] = useState(false)
 
@@ -24,12 +24,11 @@ const TodoDetailHeader = () => {
     const handleInputBlur = () => {
         setIsEdit(false)
     }
-
     return (
         <>
             <DeleteTodoAlertDialog
-                id={selectedTodo?.id}
-                name={selectedTodo?.name}
+                id={todo?.id}
+                name={todo?.name}
                 isOpen={deleteAlert.isOpen}
                 onClose={deleteAlert.close}
             />
@@ -47,13 +46,13 @@ const TodoDetailHeader = () => {
                     alignItems="center"
                 >
                     <LineClamp>
-                        {selectedTodo?.name}
+                        {todo?.name}
                     </LineClamp>
                 </Typography>
 
                 <TodoNameInput
-                    id={selectedTodo?.id}
-                    name={selectedTodo?.name || ""}
+                    id={todo?.id}
+                    name={todo?.name || ""}
                     isShow={isEdit}
                     sx={{
                         flexGrow: 1,
@@ -71,7 +70,7 @@ const TodoDetailHeader = () => {
                 />
 
                 <ItemMenu
-                    itemId={selectedTodo?.id}
+                    itemId={todo?.id}
                     instanceName="list"
                     prefix="header-"
                     onRenameButtonClick={handleRenameButtonClick}
