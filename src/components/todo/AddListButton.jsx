@@ -12,7 +12,8 @@ const AddListButton = () => {
             ...list,
             {
                 id: nanoid(),
-                name: 'Untitled'
+                name: 'Untitled',
+                tasks: []
             }
         ])
     }

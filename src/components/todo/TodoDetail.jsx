@@ -3,6 +3,7 @@ import { blue } from '@mui/material/colors'
 import TodoDetailHeader from './TodoDetailHeader'
 import { useAtomValue } from 'jotai'
 import { selectedTodoIdAtom } from '@/stores/todo-store'
+import TaskList from '../task/TaskList'
 
 const TodoDetail = () => {
     const selectedTodoId = useAtomValue(selectedTodoIdAtom)
@@ -16,6 +17,8 @@ const TodoDetail = () => {
             {selectedTodoId && (
                 <>
                     <TodoDetailHeader />
+
+                    <TaskList />
                 </>
             )}
         </Box>
