@@ -1,6 +1,6 @@
 import Sidebar from '@/components/sidebar/Sidebar'
+import TodoDetail from '@/components/todo/TodoDetail'
 import Box from '@mui/material/Box'
-import { blue } from '@mui/material/colors'
 
 const IndexPage = () => {
     return (
@@ -17,9 +17,7 @@ const IndexPage = () => {
         >
             <Sidebar />
 
-            <div style={{ background: blue[50] }}>
-
-            </div>
+            <TodoDetail />
         </Box>
     )
 }
