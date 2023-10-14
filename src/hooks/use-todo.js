@@ -24,33 +24,3 @@ export const useSelectedTodo = () => {
         selectedTodoIndex: index,
     }
 }
-
-export const useDeleteTodo = () => {
-    const [todoList, setTodoList] = useAtom(todoListAtom)
-    const [selectedTodoId, setSelectedTodoId] = useAtom(selectedTodoIdAtom)
-
-    const deleteTodo = id => {
-        let index
-        setTodoList(todoList => {
-            index = todoList.findIndex(todo => todo.id === id)
-
-            return todoList.filter(todo => todo.id !== id)
-        })
-
-        if (selectedTodoId === id) {
-            if (todoList.length > 1) {
-                if (index === todoList.length - 1) {
-                    index -= 1
-                } else {
-                    index += 1
-                }
-
-                setSelectedTodoId(todoList[index].id)
-            } else {
-                setSelectedTodoId(null)
-            }
-        }
-    }
-
-    return deleteTodo
-}

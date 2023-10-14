@@ -1,11 +1,32 @@
-import { useDeleteTodo } from "@/hooks/use-todo"
 import DeleteAlertDialog from "../DeleteAlertDialog"
+import { useAtom } from "jotai"
+import { selectedTodoIdAtom, todoListAtom } from "@/stores/todo-store"
 
 const DeleteTodoAlertDialog = ({ id, name, isOpen, onClose }) => {
-    const deleteTodo = useDeleteTodo()
+    const [todoList, setTodoList] = useAtom(todoListAtom)
+    const [selectedTodoId, setSelectedTodoId] = useAtom(selectedTodoIdAtom)
 
     const handleConfirm = () => {
-        deleteTodo(id)
+        let index
+        setTodoList(todoList => {
+            index = todoList.findIndex(todo => todo.id === id)
+
+            return todoList.filter(todo => todo.id !== id)
+        })
+
+        if (selectedTodoId === id) {
+            if (todoList.length > 1) {
+                if (index === todoList.length - 1) {
+                    index -= 1
+                } else {
+                    index += 1
+                }
+
+                setSelectedTodoId(todoList[index].id)
+            } else {
+                setSelectedTodoId(null)
+            }
+        }
 
         onClose()
     }

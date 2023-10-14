@@ -1,38 +1,23 @@
 import { useState } from 'react'
 import Box from '@mui/material/Box'
-import IconButton from '@mui/material/IconButton'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
 import Typography from '@mui/material/Typography'
-import MoreVertIcon from '@mui/icons-material/MoreVertOutlined'
 import { useSelectedTodo } from '@/hooks/use-todo'
 import LineClamp from '../LineClamp'
 import TodoNameInput from './TodoNameInput'
 import DeleteTodoAlertDialog from './DeleteTodoAlertDialog'
 import useDisclosure from '@/hooks/use-disclosure'
+import ItemMenu from '../ItemMenu'
 
 const TodoDetailHeader = () => {
     const { selectedTodo } = useSelectedTodo()
     const deleteAlert = useDisclosure()
     const [isEdit, setIsEdit] = useState(false)
-    const [menuButton, setMenuButton] = useState(null)
-    const isMenuOpen = Boolean(menuButton)
 
-    const handleMenuButtonClick = event => {
-        setMenuButton(event.currentTarget)
-    }
-
-    const handleMenuClose = () => {
-        setMenuButton(null)
-    }
-
-    const handleRenameClick = () => {
-        handleMenuClose()
+    const handleRenameButtonClick = () => {
         setIsEdit(true)
     }
 
-    const handleDeleteClick = () => {
-        handleMenuClose()
+    const handleDeleteButtonClick = () => {
         deleteAlert.open()
     }
 
@@ -85,39 +70,13 @@ const TodoDetailHeader = () => {
                     onBlur={handleInputBlur}
                 />
 
-                <IconButton
-                    id="todo-detail-options-button"
-                    aria-label="todo detail options button"
-                    aria-controls={isMenuOpen ? 'todo-detail-options-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={isMenuOpen ? 'true' : undefined}
-                    sx={{
-                        ml: 1.5
-                    }}
-                    onClick={handleMenuButtonClick}
-                >
-                    <MoreVertIcon />
-                </IconButton>
-
-                <Menu
-                    id="todo-detail-options-menu"
-                    anchorEl={menuButton}
-                    open={isMenuOpen}
-                    onClose={handleMenuClose}
-                    MenuListProps={{
-                        'aria-labelledby': 'todo-detail-options-button'
-                    }}
-                >
-                    <MenuItem onClick={handleRenameClick}>Rename List</MenuItem>
-                    <MenuItem
-                        sx={{
-                            color: 'error.main'
-                        }}
-                        onClick={handleDeleteClick}
-                    >
-                        Delete List
-                    </MenuItem>
-                </Menu>
+                <ItemMenu
+                    itemId={selectedTodo?.id}
+                    instanceName="list"
+                    prefix="header-"
+                    onRenameButtonClick={handleRenameButtonClick}
+                    onDeleteButtonClick={handleDeleteButtonClick}
+                />
             </Box>
         </>
     )
