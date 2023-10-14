@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from 'react';
+import { useAtom } from 'jotai';
 import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
 import ListItem from '@mui/material/ListItem';
@@ -8,12 +10,11 @@ import ListIcon from '@mui/icons-material/List';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVertOutlined';
-import { useAtom } from 'jotai';
-import { selectedTodoIdAtom } from '@/stores/todo-store';
-import { useEffect, useRef, useState } from 'react';
+import { selectedTodoIdAtom, todoListAtom } from '@/stores/todo-store';
 
 const TodoListItem = ({ id, name }) => {
     const [selectedTodoId, setSelectedTodoId] = useAtom(selectedTodoIdAtom)
+    const [, setTodoList] = useAtom(todoListAtom)
     const [isEdit, setIsEdit] = useState(false)
     const [menuButton, setMenuButton] = useState(null)
     const [todoName, setTodoName] = useState(name)
@@ -21,7 +22,6 @@ const TodoListItem = ({ id, name }) => {
     const isMenuOpen = Boolean(menuButton)
 
     const handleListItemClick = id => () => {
-        console.log(id)
         setSelectedTodoId(id);
     };
 
@@ -40,6 +40,15 @@ const TodoListItem = ({ id, name }) => {
 
     const handleInputBlur = () => {
         setIsEdit(false)
+
+        if (todoName.trim() === "") {
+            setTodoName(name)
+        } else {
+            setTodoList(todoList => {
+                const index = todoList.findIndex(todo => todo.id === id)
+                todoList[index].name = todoName
+            })
+        }
     }
 
     const handleInputChange = event => {
@@ -48,10 +57,13 @@ const TodoListItem = ({ id, name }) => {
 
     useEffect(() => {
         if (isEdit) {
-            console.log(inputRef)
             inputRef.current.focus()
         }
     }, [isEdit])
+
+    useEffect(() => {
+        setTodoName(name)
+    }, [name])
 
     return (
         <ListItem
