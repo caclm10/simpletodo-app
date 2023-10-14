@@ -4,6 +4,7 @@ import TodoDetailHeader from './TodoDetailHeader'
 import { useAtomValue } from 'jotai'
 import { selectedTodoIdAtom } from '@/stores/todo-store'
 import TaskList from '../task/TaskList'
+import AddTaskInput from '../task/AddTaskInput'
 
 const TodoDetail = () => {
     const selectedTodoId = useAtomValue(selectedTodoIdAtom)
@@ -13,12 +14,16 @@ const TodoDetail = () => {
             px={5}
             py={4}
             bgcolor={blue[50]}
+            display="flex"
+            flexDirection="column"
         >
             {selectedTodoId && (
                 <>
                     <TodoDetailHeader />
 
                     <TaskList />
+
+                    <AddTaskInput />
                 </>
             )}
         </Box>

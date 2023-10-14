@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useAtom, useAtomValue } from "jotai"
 import { selectedTodoIndexAtom, todoListAtom } from "@/stores/todo-store"
 
@@ -15,4 +15,17 @@ export const useSelectedTodo = () => {
         todo,
         todoIndex: selectedTodoIndex,
     }
+}
+
+export const useUpdateSelectedTodo = () => {
+    const selectedTodoIndex = useAtomValue(selectedTodoIndexAtom)
+    const [, setTodoList] = useAtom(todoListAtom)
+
+    const update = useCallback((cb) => {
+        setTodoList(todoList => {
+            cb(todoList[selectedTodoIndex])
+        })
+    }, [selectedTodoIndex, setTodoList])
+
+    return update
 }

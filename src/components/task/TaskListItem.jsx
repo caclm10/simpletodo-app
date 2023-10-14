@@ -1,11 +1,11 @@
 import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
-import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import TaskListItemCheckbox from './TaskListItemCheckbox';
 
-const TaskListItem = () => {
+const TaskListItem = ({ id, content, completed }) => {
     return (
         <Box
             position="relative"
@@ -31,23 +31,12 @@ const TaskListItem = () => {
                     lineHeight="20.02px"
                     fontSize="14px"
                 >
-                    Lorem ipsum
+                    {content}
                 </Typography>
             </ButtonBase>
 
-            <Box
-                sx={{
-                    position: 'absolute',
-                    left: '5px',
-                    top: '50%',
-                    transform: 'translateY(-50%)'
-                }}
-            >
-                <Checkbox
-                    tabIndex={-1}
-                />
-            </Box>
 
+            <TaskListItemCheckbox id={id} completed={completed} />
 
             <Box
                 sx={{
