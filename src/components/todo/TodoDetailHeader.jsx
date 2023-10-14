@@ -8,9 +8,12 @@ import MoreVertIcon from '@mui/icons-material/MoreVertOutlined'
 import { useSelectedTodo } from '@/hooks/use-todo'
 import LineClamp from '../LineClamp'
 import TodoNameInput from './TodoNameInput'
+import DeleteTodoAlertDialog from './DeleteTodoAlertDialog'
+import useDisclosure from '@/hooks/use-disclosure'
 
 const TodoDetailHeader = () => {
     const { selectedTodo } = useSelectedTodo()
+    const deleteAlert = useDisclosure()
     const [isEdit, setIsEdit] = useState(false)
     const [menuButton, setMenuButton] = useState(null)
     const isMenuOpen = Boolean(menuButton)
@@ -28,81 +31,95 @@ const TodoDetailHeader = () => {
         setIsEdit(true)
     }
 
+    const handleDeleteClick = () => {
+        handleMenuClose()
+        deleteAlert.open()
+    }
+
     const handleInputBlur = () => {
         setIsEdit(false)
     }
 
     return (
-        <Box
-            display="flex"
-        >
-            <Typography
-                flexGrow={1}
-                component="h3"
-                fontSize="1.5rem"
-                lineHeight="2rem"
-                fontWeight="500"
-                display={isEdit ? 'none' : 'flex'}
-                alignItems="center"
-            >
-                <LineClamp>
-                    {selectedTodo?.name}
-                </LineClamp>
-            </Typography>
-
-            <TodoNameInput
+        <>
+            <DeleteTodoAlertDialog
                 id={selectedTodo?.id}
-                name={selectedTodo?.name || ""}
-                isShow={isEdit}
-                sx={{
-                    flexGrow: 1,
-                    "& .MuiInputBase-input": {
-                        pt: 0,
-                        pb: 0,
-                        fontSize: '1.5rem',
-                        lineHeight: '2rem',
-                        fontWeight: '500',
-                        height: '40px',
-                        letterSpacing: '0.00938em'
-                    }
-                }}
-                onBlur={handleInputBlur}
+                name={selectedTodo?.name}
+                isOpen={deleteAlert.isOpen}
+                onClose={deleteAlert.close}
             />
 
-            <IconButton
-                id="todo-detail-options-button"
-                aria-label="todo detail options button"
-                aria-controls={isMenuOpen ? 'todo-detail-options-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={isMenuOpen ? 'true' : undefined}
-                sx={{
-                    ml: 1.5
-                }}
-                onClick={handleMenuButtonClick}
+            <Box
+                display="flex"
             >
-                <MoreVertIcon />
-            </IconButton>
-
-            <Menu
-                id="todo-detail-options-menu"
-                anchorEl={menuButton}
-                open={isMenuOpen}
-                onClose={handleMenuClose}
-                MenuListProps={{
-                    'aria-labelledby': 'todo-detail-options-button'
-                }}
-            >
-                <MenuItem onClick={handleRenameClick}>Rename List</MenuItem>
-                <MenuItem
-                    sx={{
-                        color: 'error.main'
-                    }}
-                    onClick={handleMenuClose}
+                <Typography
+                    flexGrow={1}
+                    component="h3"
+                    fontSize="1.5rem"
+                    lineHeight="2rem"
+                    fontWeight="500"
+                    display={isEdit ? 'none' : 'flex'}
+                    alignItems="center"
                 >
-                    Delete List
-                </MenuItem>
-            </Menu>
-        </Box>
+                    <LineClamp>
+                        {selectedTodo?.name}
+                    </LineClamp>
+                </Typography>
+
+                <TodoNameInput
+                    id={selectedTodo?.id}
+                    name={selectedTodo?.name || ""}
+                    isShow={isEdit}
+                    sx={{
+                        flexGrow: 1,
+                        "& .MuiInputBase-input": {
+                            pt: 0,
+                            pb: 0,
+                            fontSize: '1.5rem',
+                            lineHeight: '2rem',
+                            fontWeight: '500',
+                            height: '40px',
+                            letterSpacing: '0.00938em'
+                        }
+                    }}
+                    onBlur={handleInputBlur}
+                />
+
+                <IconButton
+                    id="todo-detail-options-button"
+                    aria-label="todo detail options button"
+                    aria-controls={isMenuOpen ? 'todo-detail-options-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={isMenuOpen ? 'true' : undefined}
+                    sx={{
+                        ml: 1.5
+                    }}
+                    onClick={handleMenuButtonClick}
+                >
+                    <MoreVertIcon />
+                </IconButton>
+
+                <Menu
+                    id="todo-detail-options-menu"
+                    anchorEl={menuButton}
+                    open={isMenuOpen}
+                    onClose={handleMenuClose}
+                    MenuListProps={{
+                        'aria-labelledby': 'todo-detail-options-button'
+                    }}
+                >
+                    <MenuItem onClick={handleRenameClick}>Rename List</MenuItem>
+                    <MenuItem
+                        sx={{
+                            color: 'error.main'
+                        }}
+                        onClick={handleDeleteClick}
+                    >
+                        Delete List
+                    </MenuItem>
+                </Menu>
+            </Box>
+        </>
     )
 }
 
