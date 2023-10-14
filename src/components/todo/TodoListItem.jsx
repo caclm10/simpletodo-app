@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useAtom } from 'jotai';
 import IconButton from '@mui/material/IconButton';
-import InputBase from '@mui/material/InputBase';
+import TextField from '@mui/material/TextField';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -11,6 +11,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVertOutlined';
 import { selectedTodoIdAtom, todoListAtom } from '@/stores/todo-store';
+import LineClamp from '../LineClamp';
 
 const TodoListItem = ({ id, name }) => {
     const [selectedTodoId, setSelectedTodoId] = useAtom(selectedTodoIdAtom)
@@ -71,19 +72,25 @@ const TodoListItem = ({ id, name }) => {
             secondaryAction={
                 <>
                     <IconButton
-                        id={`list-menu-button-${id}`}
+                        id={`todo-item-options-button-${id}`}
                         edge="end"
-                        aria-label={`list menu button ${id}`}
+                        aria-label={`todo item options button ${id}`}
+                        aria-controls={isMenuOpen ? `todo-item-options-menu-${id}` : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={isMenuOpen ? 'true' : undefined}
                         onClick={handleClickMenuButton}
                     >
                         <MoreVertIcon />
                     </IconButton>
 
                     <Menu
-                        id={`list-menu-${id}`}
+                        id={`todo-item-options-menu-${id}`}
                         anchorEl={menuButton}
                         open={isMenuOpen}
                         onClose={handleCloseMenu}
+                        MenuListProps={{
+                            'aria-labelledby': `todo-item-options-button-${id}`
+                        }}
                     >
                         <MenuItem onClick={handleRenameClick}>Rename List</MenuItem>
                         <MenuItem
@@ -108,17 +115,14 @@ const TodoListItem = ({ id, name }) => {
                     <ListIcon />
                 </ListItemIcon>
                 <ListItemText
-                    primary={todoName}
+                    primary={<LineClamp>{todoName}</LineClamp>}
                     sx={{
-                        overflow: "hidden",
-                        display: isEdit ? "none" : "-webkit-box",
-                        WebkitBoxOrient: "vertical",
-                        WebkitLineClamp: 1,
+                        display: isEdit ? "none" : "block",
                     }}
                 />
-                <InputBase
+                <TextField
                     inputRef={inputRef}
-                    type="text"
+                    variant="standard"
                     value={todoName}
                     sx={{
                         display: isEdit ? 'block' : 'none',

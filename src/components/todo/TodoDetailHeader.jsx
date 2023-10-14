@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
+import { useAtom } from 'jotai'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
-import InputBase from '@mui/material/InputBase'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
+import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import MoreVertIcon from '@mui/icons-material/MoreVertOutlined'
 import { useSelectedTodo } from '@/hooks/use-todo'
-import { useAtom } from 'jotai'
 import { todoListAtom } from '@/stores/todo-store'
+import LineClamp from '../LineClamp'
 
 const TodoDetailHeader = () => {
     const { selectedTodo, selectedTodoIndex } = useSelectedTodo()
@@ -73,13 +74,17 @@ const TodoDetailHeader = () => {
                 display={isEdit ? 'none' : 'flex'}
                 alignItems="center"
             >
-                {todoName}
+                <LineClamp>
+                    {todoName}
+                </LineClamp>
             </Typography>
 
-            <InputBase
+            <TextField
                 inputRef={inputRef}
+                variant="standard"
                 spellCheck={false}
                 value={todoName}
+                fullWidth
                 sx={{
                     flexGrow: 1,
                     display: isEdit ? 'block' : 'none',
@@ -98,17 +103,27 @@ const TodoDetailHeader = () => {
             />
 
             <IconButton
-                aria-label="todo detail options"
+                id="todo-detail-options-button"
+                aria-label="todo detail options button"
+                aria-controls={isMenuOpen ? 'todo-detail-options-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={isMenuOpen ? 'true' : undefined}
+                sx={{
+                    ml: 1.5
+                }}
                 onClick={handleMenuButtonClick}
             >
                 <MoreVertIcon />
             </IconButton>
 
             <Menu
-                id={`todo-detai-menu`}
+                id="todo-detail-options-menu"
                 anchorEl={menuButton}
                 open={isMenuOpen}
                 onClose={handleMenuClose}
+                MenuListProps={{
+                    'aria-labelledby': 'todo-detail-options-button'
+                }}
             >
                 <MenuItem onClick={handleRenameClick}>Rename List</MenuItem>
                 <MenuItem
