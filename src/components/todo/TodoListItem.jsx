@@ -9,20 +9,20 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVertOutlined';
 import { useAtom } from 'jotai';
-import { selectedListIdAtom } from '@/stores/todo-store';
+import { selectedTodoIdAtom } from '@/stores/todo-store';
 import { useEffect, useRef, useState } from 'react';
 
 const TodoListItem = ({ id, name }) => {
-    const [selectedListId, setSelectedListId] = useAtom(selectedListIdAtom)
+    const [selectedTodoId, setSelectedTodoId] = useAtom(selectedTodoIdAtom)
     const [isEdit, setIsEdit] = useState(false)
     const [menuButton, setMenuButton] = useState(null)
-    const [listName, setListName] = useState(name)
+    const [todoName, setTodoName] = useState(name)
     const inputRef = useRef()
     const isMenuOpen = Boolean(menuButton)
 
     const handleListItemClick = id => () => {
         console.log(id)
-        setSelectedListId(id);
+        setSelectedTodoId(id);
     };
 
     const handleClickMenuButton = event => {
@@ -43,7 +43,7 @@ const TodoListItem = ({ id, name }) => {
     }
 
     const handleInputChange = event => {
-        setListName(event.target.value)
+        setTodoName(event.target.value)
     }
 
     useEffect(() => {
@@ -89,14 +89,14 @@ const TodoListItem = ({ id, name }) => {
         >
             <ListItemButton
                 role={undefined}
-                selected={id === selectedListId}
+                selected={id === selectedTodoId}
                 onClick={handleListItemClick(id)}
             >
                 <ListItemIcon>
                     <ListIcon />
                 </ListItemIcon>
                 <ListItemText
-                    primary={listName}
+                    primary={todoName}
                     sx={{
                         overflow: "hidden",
                         display: isEdit ? "none" : "-webkit-box",
@@ -107,7 +107,7 @@ const TodoListItem = ({ id, name }) => {
                 <InputBase
                     inputRef={inputRef}
                     type="text"
-                    value={listName}
+                    value={todoName}
                     sx={{
                         display: isEdit ? 'block' : 'none',
                     }}
