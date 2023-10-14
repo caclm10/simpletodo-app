@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useAtom } from 'jotai';
 import IconButton from '@mui/material/IconButton';
-import TextField from '@mui/material/TextField';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -10,16 +9,14 @@ import ListIcon from '@mui/icons-material/List';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVertOutlined';
-import { selectedTodoIdAtom, todoListAtom } from '@/stores/todo-store';
+import { selectedTodoIdAtom } from '@/stores/todo-store';
 import LineClamp from '../LineClamp';
+import TodoNameInput from './TodoNameInput';
 
 const TodoListItem = ({ id, name }) => {
     const [selectedTodoId, setSelectedTodoId] = useAtom(selectedTodoIdAtom)
-    const [, setTodoList] = useAtom(todoListAtom)
     const [isEdit, setIsEdit] = useState(false)
     const [menuButton, setMenuButton] = useState(null)
-    const [todoName, setTodoName] = useState(name)
-    const inputRef = useRef()
     const isMenuOpen = Boolean(menuButton)
 
     const handleListItemClick = id => () => {
@@ -41,30 +38,7 @@ const TodoListItem = ({ id, name }) => {
 
     const handleInputBlur = () => {
         setIsEdit(false)
-
-        if (todoName.trim() === "") {
-            setTodoName(name)
-        } else {
-            setTodoList(todoList => {
-                const index = todoList.findIndex(todo => todo.id === id)
-                todoList[index].name = todoName
-            })
-        }
     }
-
-    const handleInputChange = event => {
-        setTodoName(event.target.value)
-    }
-
-    useEffect(() => {
-        if (isEdit) {
-            inputRef.current.focus()
-        }
-    }, [isEdit])
-
-    useEffect(() => {
-        setTodoName(name)
-    }, [name])
 
     return (
         <ListItem
@@ -115,20 +89,16 @@ const TodoListItem = ({ id, name }) => {
                     <ListIcon />
                 </ListItemIcon>
                 <ListItemText
-                    primary={<LineClamp>{todoName}</LineClamp>}
+                    primary={<LineClamp>{name}</LineClamp>}
                     sx={{
                         display: isEdit ? "none" : "block",
                     }}
                 />
-                <TextField
-                    inputRef={inputRef}
-                    variant="standard"
-                    value={todoName}
-                    sx={{
-                        display: isEdit ? 'block' : 'none',
-                    }}
+                <TodoNameInput
+                    id={id}
+                    name={name}
+                    isShow={isEdit}
                     onBlur={handleInputBlur}
-                    onChange={handleInputChange}
                 />
             </ListItemButton>
         </ListItem>

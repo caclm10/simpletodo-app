@@ -1,24 +1,19 @@
-import { useEffect, useRef, useState } from 'react'
-import { useAtom } from 'jotai'
+import { useState } from 'react'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import MoreVertIcon from '@mui/icons-material/MoreVertOutlined'
 import { useSelectedTodo } from '@/hooks/use-todo'
-import { todoListAtom } from '@/stores/todo-store'
 import LineClamp from '../LineClamp'
+import TodoNameInput from './TodoNameInput'
 
 const TodoDetailHeader = () => {
-    const { selectedTodo, selectedTodoIndex } = useSelectedTodo()
-    const [, setTodoList] = useAtom(todoListAtom)
-    const [todoName, setTodoName] = useState("")
+    const { selectedTodo } = useSelectedTodo()
     const [isEdit, setIsEdit] = useState(false)
     const [menuButton, setMenuButton] = useState(null)
     const isMenuOpen = Boolean(menuButton)
-    const inputRef = useRef()
 
     const handleMenuButtonClick = event => {
         setMenuButton(event.currentTarget)
@@ -35,31 +30,7 @@ const TodoDetailHeader = () => {
 
     const handleInputBlur = () => {
         setIsEdit(false)
-
-        if (todoName.trim() === "") {
-            setTodoName(selectedTodo?.name)
-        } else {
-            setTodoList(todoList => {
-                todoList[selectedTodoIndex].name = todoName
-            })
-        }
     }
-
-    const handleInputChange = event => {
-        setTodoName(event.target.value)
-    }
-
-    useEffect(() => {
-        if (isEdit) {
-            inputRef.current.focus()
-        }
-    }, [isEdit])
-
-    useEffect(() => {
-        if (selectedTodo?.name) {
-            setTodoName(selectedTodo?.name)
-        }
-    }, [selectedTodo?.name])
 
     return (
         <Box
@@ -75,19 +46,16 @@ const TodoDetailHeader = () => {
                 alignItems="center"
             >
                 <LineClamp>
-                    {todoName}
+                    {selectedTodo?.name}
                 </LineClamp>
             </Typography>
 
-            <TextField
-                inputRef={inputRef}
-                variant="standard"
-                spellCheck={false}
-                value={todoName}
-                fullWidth
+            <TodoNameInput
+                id={selectedTodo?.id}
+                name={selectedTodo?.name || ""}
+                isShow={isEdit}
                 sx={{
                     flexGrow: 1,
-                    display: isEdit ? 'block' : 'none',
                     "& .MuiInputBase-input": {
                         pt: 0,
                         pb: 0,
@@ -99,7 +67,6 @@ const TodoDetailHeader = () => {
                     }
                 }}
                 onBlur={handleInputBlur}
-                onChange={handleInputChange}
             />
 
             <IconButton
