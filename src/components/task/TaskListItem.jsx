@@ -1,46 +1,43 @@
 import Box from '@mui/material/Box';
-import ButtonBase from '@mui/material/ButtonBase';
-import Typography from '@mui/material/Typography';
-import TaskListItemCheckbox from './TaskListItemCheckbox';
-import TaskListItemDeleteButton from './TaskListItemDeleteButton';
+import TaskListItemButton from './TaskListItemButton';
+import TaskItemDeleteButton from './TaskItemDeleteButton';
+import TaskItemCheckbox from './TaskItemCheckbox';
 
 const TaskListItem = ({ id, content, completed }) => {
     return (
-        <>
+        <Box
+            position="relative"
+            bgcolor="background.paper"
+            display="flex"
+            alignItems="strecth"
+            borderRadius={1}
+            overflow="hidden"
+        >
+
+            <TaskListItemButton id={id} content={content} completed={completed} />
+
             <Box
-                position="relative"
-                bgcolor="background.paper"
-                display="flex"
-                alignItems="strecth"
-                borderRadius={1}
-                overflow="hidden"
+                sx={{
+                    position: 'absolute',
+                    left: '5px',
+                    top: '50%',
+                    transform: 'translateY(-50%)'
+                }}
             >
-                <ButtonBase
-                    sx={{
-                        py: '8px',
-                        pr: '48px',
-                        pl: '56px',
-                        height: '100%',
-                        width: '100%',
-                        justifyContent: 'start',
-                        minHeight: '42px',
-                        textAlign: 'start'
-                    }}
-                >
-                    <Typography
-                        lineHeight="20.02px"
-                        fontSize="14px"
-                    >
-                        {content}
-                    </Typography>
-                </ButtonBase>
-
-
-                <TaskListItemCheckbox id={id} completed={completed} />
-
-                <TaskListItemDeleteButton id={id} content={content} />
+                <TaskItemCheckbox id={id} completed={completed} />
             </Box>
-        </>
+
+            <Box
+                sx={{
+                    position: 'absolute',
+                    right: '5px',
+                    top: '50%',
+                    transform: 'translateY(-50%)'
+                }}
+            >
+                <TaskItemDeleteButton id={id} content={content} />
+            </Box>
+        </Box>
     )
 }
 
