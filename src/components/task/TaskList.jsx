@@ -15,6 +15,8 @@ const TaskList = () => {
                         id={task.id}
                         content={task.content}
                         completed={task.completed}
+                        stepsCount={task.steps.length}
+                        completedStepsCount={task.steps.filter(step => !!step.completed).length}
                     />
                 ))}
             </Stack>

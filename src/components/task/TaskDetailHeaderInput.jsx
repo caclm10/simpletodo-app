@@ -1,18 +1,26 @@
 import { useUpdateSelectedTodoTask } from '@/hooks/use-task'
 import TextField from '@mui/material/TextField'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const TaskDetailHeaderInput = ({ id, completed, content }) => {
     const updateTask = useUpdateSelectedTodoTask()
     const [taskContent, setTaskContent] = useState('')
+    const inputRef = useRef()
 
-    const handleContentUpdate = () => {
+    const updateContent = () => {
         if (taskContent.trim() === "") {
             setTaskContent(content)
         } else {
             updateTask(id, task => {
                 task.content = taskContent
             })
+        }
+    }
+
+    const handleKeyDown = event => {
+        if (event.key === 'Enter') {
+            event.preventDefault()
+            inputRef.current.blur()
         }
     }
 
@@ -26,6 +34,7 @@ const TaskDetailHeaderInput = ({ id, completed, content }) => {
 
     return (
         <TextField
+            inputRef={inputRef}
             variant="standard"
             fullWidth
             multiline
@@ -36,10 +45,17 @@ const TaskDetailHeaderInput = ({ id, completed, content }) => {
                     justifyContent: 'center',
                     fontSize: '1.5rem',
                     lineHeight: '2rem',
-                    textDecoration: completed ? 'line-through' : 'none'
+                    textDecoration: completed ? 'line-through' : 'none',
                 }
             }}
-            onBlur={handleContentUpdate}
+            inputProps={{
+                style: {
+                    maxHeight: '128px',
+                    overflow: `auto`,
+                }
+            }}
+            onKeyDown={handleKeyDown}
+            onBlur={updateContent}
         />
     )
 }

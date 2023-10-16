@@ -3,6 +3,8 @@ import Box from '@mui/material/Box'
 import Drawer from '@mui/material/Drawer'
 import { selectedTaskIdAtom } from '@/stores/task-store'
 import TaskDetailHeader from './TaskDetailHeader'
+import StepList from '../step/StepList'
+import AddStepForm from '../step/AddStepForm'
 
 const TaskDetail = () => {
     const [selectedTaskId, setSelectedTaskId] = useAtom(selectedTaskIdAtom)
@@ -16,13 +18,25 @@ const TaskDetail = () => {
             anchor="right"
             open={!!selectedTaskId}
             onClose={handleClose}
+            PaperProps={{
+                sx: {
+                    width: '100%',
+                    maxWidth: '400px'
+                }
+            }}
         >
-            <Box py={5} px={1.5} maxWidth="400px">
+            <Box py={5} px={1.5} display="flex" flexDirection="column" height="100%">
                 <TaskDetailHeader />
 
-                {/* Step List */}
+                <Box
+                    flexGrow={1}
+                    height={0}
+                    overflow="auto"
+                >
+                    <StepList />
+                </Box>
 
-                {/* New Step Input */}
+                <AddStepForm id={selectedTaskId} />
 
             </Box>
         </Drawer>

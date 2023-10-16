@@ -8,9 +8,7 @@ const TodoNameInput = ({ id, name, isShow, onBlur, sx = {} }) => {
     const [, setTodoList] = useAtom(todoListAtom)
     const inputRef = useRef()
 
-    const handleInputBlur = () => {
-        onBlur()
-
+    const updateName = () => {
         if (todoName.trim() === "") {
             setTodoName(name)
         } else {
@@ -21,9 +19,22 @@ const TodoNameInput = ({ id, name, isShow, onBlur, sx = {} }) => {
         }
     }
 
-    const handleInputChange = event => {
+    const handleBlur = () => {
+        onBlur()
+        updateName()
+    }
+
+    const handleChange = event => {
         setTodoName(event.target.value)
     }
+
+    const handleKeyDown = event => {
+        if (event.key === 'Enter') {
+            event.preventDefault()
+            inputRef.current.blur()
+        }
+    }
+
 
     useEffect(() => {
         setTodoName(name)
@@ -45,8 +56,9 @@ const TodoNameInput = ({ id, name, isShow, onBlur, sx = {} }) => {
                 display: isShow ? 'block' : 'none',
                 ...sx
             }}
-            onBlur={handleInputBlur}
-            onChange={handleInputChange}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            onBlur={handleBlur}
         />
     )
 }

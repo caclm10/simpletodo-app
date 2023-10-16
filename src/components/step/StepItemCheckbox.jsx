@@ -1,12 +1,13 @@
 import Checkbox from '@mui/material/Checkbox';
 import { useUpdateSelectedTodoTask } from '@/hooks/use-task';
 
-const TaskItemCheckbox = ({ id, completed }) => {
+const StepItemCheckbox = ({ taskId, id, completed }) => {
     const update = useUpdateSelectedTodoTask()
 
     const handleChange = event => {
-        update(id, task => {
-            task.completed = event.target.checked
+        update(taskId, task => {
+            const index = task.steps.findIndex(step => step.id === id)
+            task.steps[index].completed = event.target.checked
         })
     }
 
@@ -14,9 +15,10 @@ const TaskItemCheckbox = ({ id, completed }) => {
         <Checkbox
             tabIndex={-1}
             checked={completed || false}
+            size="small"
             onChange={handleChange}
         />
     )
 }
 
-export default TaskItemCheckbox
+export default StepItemCheckbox

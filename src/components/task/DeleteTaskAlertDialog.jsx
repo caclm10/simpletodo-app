@@ -23,8 +23,8 @@ const DeleteTaskAlertDialog = ({ id, content, isOpen, onClose }) => {
         <DeleteAlertDialog
             title="Delete task"
             content={`"${content}" will be permanently deleted.`}
-            titleId={`todo-delete-alert-dialog-title`}
-            contentId={`todo-delete-alert-dialog-description`}
+            titleId={`task-delete-alert-dialog-title`}
+            contentId={`task-delete-alert-dialog-description`}
             isOpen={isOpen}
             onClose={onClose}
             onConfirm={handleConfirm}

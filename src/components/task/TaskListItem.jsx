@@ -1,9 +1,20 @@
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import TaskListItemButton from './TaskListItemButton';
 import TaskItemDeleteButton from './TaskItemDeleteButton';
 import TaskItemCheckbox from './TaskItemCheckbox';
 
-const TaskListItem = ({ id, content, completed }) => {
+const TaskListItem = ({ id, content, completed, stepsCount, completedStepsCount }) => {
+    const [isThreeLines, setIsThreeLines] = useState(false)
+
+    const handleHeightChange = height => {
+        if (height > 80) {
+            setIsThreeLines(true)
+        } else {
+            setIsThreeLines(false)
+        }
+    }
+
     return (
         <Box
             position="relative"
@@ -14,14 +25,21 @@ const TaskListItem = ({ id, content, completed }) => {
             overflow="hidden"
         >
 
-            <TaskListItemButton id={id} content={content} completed={completed} />
+            <TaskListItemButton
+                id={id}
+                content={content}
+                completed={completed}
+                stepsCount={stepsCount}
+                completedStepsCount={completedStepsCount}
+                onHeightChange={handleHeightChange}
+            />
 
             <Box
                 sx={{
                     position: 'absolute',
                     left: '5px',
-                    top: '50%',
-                    transform: 'translateY(-50%)'
+                    top: `${isThreeLines ? '10px' : '50%'}`,
+                    transform: `translateY(${isThreeLines ? '0' : '-50%'})`
                 }}
             >
                 <TaskItemCheckbox id={id} completed={completed} />
@@ -31,8 +49,8 @@ const TaskListItem = ({ id, content, completed }) => {
                 sx={{
                     position: 'absolute',
                     right: '5px',
-                    top: '50%',
-                    transform: 'translateY(-50%)'
+                    top: `${isThreeLines ? '10px' : '50%'}`,
+                    transform: `translateY(${isThreeLines ? '0' : '-50%'})`
                 }}
             >
                 <TaskItemDeleteButton id={id} content={content} />
