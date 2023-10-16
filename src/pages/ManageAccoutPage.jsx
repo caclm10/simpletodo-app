@@ -8,6 +8,7 @@ import UpdateProfileForm from '@/components/account/UpdateProfileForm'
 import NewPasswordForm from '@/components/account/NewPasswordForm'
 import DeleteAccountButton from '@/components/account/DeleteAccountButton'
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
+import UpdateProfileImageForm from '@/components/account/UpdateProfileImageForm'
 
 const ManageAccoutPage = () => {
     return (
@@ -26,6 +27,8 @@ const ManageAccoutPage = () => {
                         >
                             Back</Button>
                     </Box>
+
+                    <UpdateProfileImageForm />
 
                     <UpdateProfileForm />
 

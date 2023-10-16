@@ -11,6 +11,7 @@ const DeleteAlertDialog = ({
     titleId,
     contentId,
     isOpen,
+    confirmText = 'Delete',
     onClose,
     onConfirm
 }) => {
@@ -32,7 +33,7 @@ const DeleteAlertDialog = ({
             <DialogActions>
                 <Button onClick={onClose}>Cancel</Button>
                 <Button color="error" onClick={onConfirm}>
-                    Delete
+                    {confirmText}
                 </Button>
             </DialogActions>
         </Dialog>
