@@ -17,8 +17,8 @@ const NewPasswordForm = () => {
           New Password
         </Typography>
 
-        <TextField variant="standard" name="current_password" label="Current Password" margin="dense" fullWidth />
-        <TextField variant="standard" name="password" label="New Password" margin="dense" fullWidth />
+        <TextField type="password" variant="standard" name="current_password" label="Current Password" margin="dense" fullWidth />
+        <TextField type="password" variant="standard" name="password" label="New Password" margin="dense" fullWidth />
 
       </CardContent>
       <CardActions sx={{ justifyContent: 'end' }}>
