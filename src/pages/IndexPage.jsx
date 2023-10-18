@@ -12,8 +12,10 @@ const IndexPage = () => {
     return (
         <Box
             minHeight="100vh"
+            flexDirection="column"
             sx={{
                 display: {
+                    xs: 'flex',
                     md: "grid"
                 },
                 gridTemplateColumns: {

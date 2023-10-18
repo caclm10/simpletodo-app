@@ -16,6 +16,7 @@ const TodoDetail = () => {
             bgcolor={blue[50]}
             display="flex"
             flexDirection="column"
+            flexGrow={1}
         >
             {selectedTodoId && (
                 <>
