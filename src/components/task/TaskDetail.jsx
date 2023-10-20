@@ -1,6 +1,8 @@
 import { useAtom } from 'jotai'
 import Box from '@mui/material/Box'
 import Drawer from '@mui/material/Drawer'
+import IconButton from '@mui/material/IconButton'
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { selectedTaskIdAtom } from '@/stores/task-store'
 import TaskDetailHeader from './TaskDetailHeader'
 import StepList from '../step/StepList'
@@ -25,7 +27,33 @@ const TaskDetail = () => {
                 }
             }}
         >
-            <Box py={5} px={1.5} display="flex" flexDirection="column" height="100%">
+            <Box
+                px={1.5}
+                display="flex"
+                flexDirection="column"
+                height="100%"
+                pb={5}
+                sx={{
+                    pt: {
+                        xs: 2,
+                        md: 5
+                    }
+                }}
+            >
+
+                <Box
+                    display="flex"
+                    justifyContent="end"
+                    mb={2}
+                >
+                    <IconButton
+                        aria-label="close task detail"
+                        onClick={handleClose}
+                    >
+                        <CloseOutlinedIcon />
+                    </IconButton>
+                </Box>
+
                 <TaskDetailHeader />
 
                 <Box

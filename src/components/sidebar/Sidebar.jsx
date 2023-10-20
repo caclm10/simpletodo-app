@@ -26,6 +26,12 @@ const Sidebar = () => {
                 px={2}
                 bgcolor={blue[50]}
                 zIndex={10}
+                sx={{
+                    display: {
+                        xs: 'block',
+                        md: 'none'
+                    }
+                }}
             >
                 <IconButton
                     aria-label="sidebar toggler"
@@ -40,6 +46,7 @@ const Sidebar = () => {
                 anchor="left"
                 open={drawer.isOpen}
                 onClose={drawer.close}
+                onOpen={drawer.open}
                 PaperProps={{
                     sx: {
                         width: '100%',

@@ -1,7 +1,8 @@
-import Box from '@mui/material/Box'
-import { blue } from '@mui/material/colors'
-import TodoDetailHeader from './TodoDetailHeader'
 import { useAtomValue } from 'jotai'
+import { blue } from '@mui/material/colors'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import TodoDetailHeader from './TodoDetailHeader'
 import { selectedTodoIdAtom } from '@/stores/todo-store'
 import TaskList from '../task/TaskList'
 import AddTaskInput from '../task/AddTaskInput'
@@ -15,6 +16,7 @@ const TodoDetail = () => {
             bgcolor={blue[50]}
             display="flex"
             flexDirection="column"
+            justifyContent={selectedTodoId ? 'stretch' : 'center'}
             flexGrow={1}
             sx={{
                 px: {
@@ -35,6 +37,13 @@ const TodoDetail = () => {
 
                     <AddTaskInput />
                 </>
+            )}
+
+            {!selectedTodoId && (
+                <Typography
+                    textAlign="center"
+                    color="grey.500"
+                >No selected To-Do yet. Select the list in the sidebar.</Typography>
             )}
         </Box>
     )
