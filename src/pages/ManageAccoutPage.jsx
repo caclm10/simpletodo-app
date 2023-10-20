@@ -15,7 +15,12 @@ const ManageAccoutPage = () => {
         <Box
             minHeight="100vh"
             bgcolor={blue[50]}
-            py={7}
+            sx={{
+                py: {
+                    xs: 3,
+                    md: 7
+                }
+            }}
         >
             <Container maxWidth="sm">
                 <Stack spacing={3}>

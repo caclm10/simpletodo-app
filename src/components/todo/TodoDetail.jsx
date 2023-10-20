@@ -11,12 +11,21 @@ const TodoDetail = () => {
 
     return (
         <Box
-            px={5}
-            py={4}
+            pb={4}
             bgcolor={blue[50]}
             display="flex"
             flexDirection="column"
             flexGrow={1}
+            sx={{
+                px: {
+                    xs: 3,
+                    md: 5
+                },
+                pt: {
+                    xs: 8,
+                    md: 4
+                }
+            }}
         >
             {selectedTodoId && (
                 <>
